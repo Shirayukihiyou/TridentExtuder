@@ -56,7 +56,7 @@ class ControlAutoTune:
     def __init__(self, heater, target):
         self.heater = heater
         self.heater_max_power = heater.get_max_power()
-        self.calibrate_temp = -target
+        self.calibrate_temp = target
         # Heating control
         self.heating = False
         self.peak = 0.
@@ -74,34 +74,28 @@ class ControlAutoTune:
                 (read_time + self.heater.get_pwm_delay(), value))
             self.last_pwm = value
         self.heater.set_pwm(read_time, value)
-    def temperature_update(self, read_time, tempreal, target_tempreal):
-        target_temp=-target_tempreal
-        temp=-tempreal
+    def temperature_update(self, read_time, temp, target_temp):
         self.temp_samples.append((read_time, temp))
         # Check if the temperature has crossed the target and
         # enable/disable the heater if so.
         if self.heating and temp >= target_temp:
-            
             self.heating = False
             self.check_peaks()
-            self.heater.alter_target(-self.calibrate_temp + TUNE_PID_DELTA)
-            gcmd.respond_info(
-            "PID parameters: pid_Kp=%.3f pid_Ki=%.3f pid_Kd=%.3f" % (self.heater.target_temp, TUNE_PID_DELTA ,self.peak))
-
+            self.heater.alter_target(self.calibrate_temp - TUNE_PID_DELTA)
         elif not self.heating and temp <= target_temp:
             self.heating = True
             self.check_peaks()
-            self.heater.alter_target(-self.calibrate_temp)
+            self.heater.alter_target(self.calibrate_temp)
         # Check if this temperature is a peak and record it if so
         if self.heating:
             self.set_pwm(read_time, self.heater_max_power)
-            if temp < -self.peak:
-                self.peak = -temp
+            if temp < self.peak:
+                self.peak = temp
                 self.peak_time = read_time
         else:
             self.set_pwm(read_time, 0.)
-            if temp > -self.peak:
-                self.peak = -temp
+            if temp > self.peak:
+                self.peak = temp
                 self.peak_time = read_time
     def check_busy(self, eventtime, smoothed_temp, target_temp):
         if self.heating or len(self.peaks) < 12:
@@ -109,12 +103,11 @@ class ControlAutoTune:
         return False
     # Analysis
     def check_peaks(self):
-        self.peaks.append((-self.peak, self.peak_time))
+        self.peaks.append((self.peak, self.peak_time))
         if self.heating:
-            self.peak = -9999999.
-        else:
             self.peak = 9999999.
-        
+        else:
+            self.peak = -9999999.
         if len(self.peaks) < 4:
             return
         self.calc_pid(len(self.peaks)-1)
