@@ -6,6 +6,7 @@ TridentExtruder is a bio 3D printer extruder designed to extend the functionalit
 
 - Supports Peltier module control for efficient cooling of the printer head.
 - Replaces Klipper's default `watermark` cooling control with a PID-based algorithm, improving cooling efficiency and precision.
+- Allows simultaneous heating and cooling for different targets (e.g., heating the bed and cooling the print head).
 - Tailored for bio 3D printing applications requiring precise temperature management.
 - Requires minimal configuration changes to implement cooling functionality.
 
@@ -50,11 +51,15 @@ TridentExtruder is a bio 3D printer extruder designed to extend the functionalit
 
 ### 2. Modify Configuration File
 
-Update the `printer.cfg` file to set the `[extruder]` `control` parameter to `watermark`. Example:
+Update the `printer.cfg` file to set the `[extruder]` `control` parameter. Use `watermark` for cooling and `pid` for heating. Example:
 
 ```ini
 [extruder]
-control: watermark
+control: watermark  # For cooling
+...
+
+[heater_bed]
+control: pid  # For heating
 ...
 ```
 
@@ -69,6 +74,7 @@ sudo service klipper restart
 ## Notes
 
 - Always backup the original files before making any modifications.
+- The original `watermark` algorithm has been overwritten and is no longer available.
 - If issues arise after the changes, check the log files or report them on the Issues page of this repository.
 - Ensure the printer head hardware supports Peltier cooling and is properly connected.
 
