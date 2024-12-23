@@ -1,11 +1,11 @@
 # TridentExtruder: A Bio 3D Printer Extruder with Peltier Module Based on Klipper
 
-TridentExtruder is a bio 3D printer extruder designed to extend the functionality of Klipper firmware. One of its key features is the integration of a Peltier module for efficient cooling of the printer head. This project modifies Klipper’s open-source code, replacing the `watermark` cooling algorithm in the `klippy/extras/heaters.py` file with a PID-based cooling algorithm.
+TridentExtruder is a bio 3D printer extruder designed to extend the functionality of Klipper firmware. One of its key features is the integration of a Peltier module for efficient cooling of the printer head. This project modifies Klipper’s open-source code, adapting the PID and `watermark` algorithms in the `klippy/extras/heaters.py` file to support cooling functionality, which they originally did not provide.
 
 ## Features
 
 - Supports Peltier module control for efficient cooling of the printer head.
-- Replaces Klipper's default `watermark` cooling control with a PID-based algorithm, improving cooling efficiency and precision.
+- Extends Klipper's PID and `watermark` algorithms to enable cooling functionality, improving cooling efficiency and precision.
 - Allows simultaneous heating and cooling for different targets (e.g., heating the bed and cooling the print head).
 - Tailored for bio 3D printing applications requiring precise temperature management.
 - Requires minimal configuration changes to implement cooling functionality.
@@ -74,13 +74,13 @@ sudo service klipper restart
 ## Notes
 
 - Always backup the original files before making any modifications.
-- The original `watermark` algorithm has been overwritten and is no longer available.
+- The original `watermark` algorithm has been adapted for cooling and is no longer available in its original form.
 - If issues arise after the changes, check the log files or report them on the Issues page of this repository.
 - Ensure the printer head hardware supports Peltier cooling and is properly connected.
 
 ## Background
 
-Klipper is a powerful 3D printer firmware. However, the default `watermark` cooling algorithm may not suit specific cooling needs. TridentExtruder enhances Klipper’s functionality by improving cooling control, making it suitable for bio 3D printing and other specialized applications.
+Klipper is a powerful 3D printer firmware. However, neither the default PID nor the `watermark` algorithms supported cooling functionality. TridentExtruder adapts these algorithms to enable precise cooling control, making it suitable for bio 3D printing and other specialized applications.
 
 ## Contributions
 
