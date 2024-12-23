@@ -1,11 +1,11 @@
 # TridentExtruder: A Bio 3D Printer Extruder with Peltier Module Based on Klipper
 
-TridentExtruder is a bio 3D printer extruder designed to extend the functionality of Klipper firmware. One of its key features is the integration of a Peltier module for efficient cooling of the printer head. This project modifies Klipper’s open-source code, replacing the `watermark` cooling algorithm in the `klipper/extras/heaters.py` file with a PID-based cooling algorithm.
+TridentExtruder is a bio 3D printer extruder designed to extend the functionality of Klipper firmware. One of its key features is the integration of a Peltier module for efficient cooling of the printer head. This project modifies Klipper’s open-source code, replacing the `watermark` cooling algorithm in the `klippy/extras/heaters.py` file with a PID-based cooling algorithm.
 
 ## Features
 
 - Supports Peltier module control for efficient cooling of the printer head.
-- Replaces Klipper's default `watermark` cooling control with a PID-based algorithm.
+- Replaces Klipper's default `watermark` cooling control with a PID-based algorithm, improving cooling efficiency and precision.
 - Tailored for bio 3D printing applications requiring precise temperature management.
 - Requires minimal configuration changes to implement cooling functionality.
 
@@ -18,12 +18,34 @@ TridentExtruder is a bio 3D printer extruder designed to extend the functionalit
    git clone https://github.com/Shirayukihiyou/TridentExtuder.git
    ```
 2. Replace the `heaters.py` file in the Klipper source code:
-   - File path: `klipper/extras/heaters.py`
+   - File path: `klippy/extras/heaters.py`
    - Backup the original file before replacing it.
 
    ```bash
-   cp /path/to/klipper/extras/heaters.py /path/to/backup/heaters.py.bak
-   cp klipper-cooling-mod/heaters.py /path/to/klipper/extras/heaters.py
+   cp /path/to/klippy/extras/heaters.py /path/to/backup/heaters.py.bak
+   cp TridentExtuder/extras/heaters.py /path/to/klippy/extras/heaters.py
+   ```
+
+3. Replace the `pid_calibrate.py` file in the Klipper source code:
+   - File path: `klippy/extras/pid_calibrate.py`
+   - Backup the original file before replacing it.
+
+   ```bash
+   cp /path/to/klippy/extras/pid_calibrate.py /path/to/backup/pid_calibrate.py.bak
+   cp TridentExtuder/extras/pid_calibrate.py /path/to/klippy/extras/pid_calibrate.py
+   ```
+
+4. Perform PID calibration for cooling:
+   - Restart the Klipper server and run the following command in your terminal:
+
+   ```bash
+   PID_CALIBRATE HEATER=extruder TARGET=4
+   ```
+
+   - Once calibration is complete, restore the original `pid_calibrate.py` file:
+
+   ```bash
+   cp /path/to/backup/pid_calibrate.py.bak /path/to/klippy/extras/pid_calibrate.py
    ```
 
 ### 2. Modify Configuration File
