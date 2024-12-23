@@ -23,7 +23,7 @@ TridentExtruder is a bio 3D printer extruder designed to extend the functionalit
    - Backup the original file before replacing it.
 
    ```bash
-   cp ~/klipper/klippy/extras/heaters.py /path/to/backup/heaters.py.bak
+   cp ~/klipper/klippy/extras/heaters.py ~/klipper/klippy/extras/heaters.py.bak
    cp TridentExtuder/extras/heaters.py ~/klipper/klippy/extras/heaters.py
    ```
 
@@ -32,7 +32,7 @@ TridentExtruder is a bio 3D printer extruder designed to extend the functionalit
    - Backup the original file before replacing it.
 
    ```bash
-   cp ~/klipper/klippy/extras/pid_calibrate.py /path/to/backup/pid_calibrate.py.bak
+   cp ~/klipper/klippy/extras/pid_calibrate.py ~/klipper/klippy/extras/pid_calibrate.py.bak
    cp TridentExtuder/extras/pid_calibrate.py ~/klipper/klippy/extras/pid_calibrate.py
    ```
 
@@ -46,7 +46,7 @@ TridentExtruder is a bio 3D printer extruder designed to extend the functionalit
    - Once calibration is complete, restore the original `pid_calibrate.py` file:
 
    ```bash
-   cp /path/to/backup/pid_calibrate.py.bak ~/klipper/klippy/extras/pid_calibrate.py
+   cp ~/klipper/klippy/extras/pid_calibrate.py.bak ~/klipper/klippy/extras/pid_calibrate.py
    ```
 
 ### 2. Modify Configuration File
