@@ -1,4 +1,4 @@
-# TridentExtruder: A Bio 3D Printer Extruder with Peltier Module Based on Klipper
+# TridentExtruder: A Bio 3D Printer Extruder with Peltier Module cooler for cooling Based on Klipper
 
 TridentExtruder is a bio 3D printer extruder designed to extend the functionality of Klipper firmware. One of its key features is the integration of a Peltier module for efficient cooling of the printer head. This project modifies Klipper’s open-source code, adapting the PID and `watermark` algorithms in the `klippy/extras/heaters.py` file to support cooling functionality, which they originally did not provide.
 
